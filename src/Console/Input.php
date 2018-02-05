@@ -81,9 +81,12 @@ class Input
      * @access  public
      * @param   string  $flag   Flag to be checked
      * @return  boolean True / False
+     * @throws  \Console\Exception\InvalidArgument Parameter must be string
      */
     public function hasFlag($flag) {
-        if (!is_string($flag)) return;
+        if (!is_string($flag)) {
+            throw new \Console\Exception\InvalidArgument('Parameter must be string.');
+        }
         
         return in_array($flag, $this->_flags);
     }
@@ -94,9 +97,12 @@ class Input
      * @access  public
      * @param   string  $option     Option name
      * @return  boolean True / False
+     * @throws  \Console\Exception\InvalidArgument Parameter must be string
      */
     public function hasOption($option) {
-        if (!is_string($option)) return;
+        if (!is_string($option)) {
+            throw new \Console\Exception\InvalidArgument('Parameter must be string.');
+        }
 
         return isset($this->_options[$option]);
     }
