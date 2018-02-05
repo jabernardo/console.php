@@ -5,10 +5,11 @@ namespace Console;
 class Output
 {
     public function write($str) {
-        print($str);
+        call_user_func_array('printf', func_get_args());
     }
 
     public function writeln($str) {
-        print($str . PHP_EOL);
+        call_user_func_array('printf', func_get_args());
+        print(PHP_EOL);
     }
 }

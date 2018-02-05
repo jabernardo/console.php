@@ -10,7 +10,7 @@ class TestCommand implements \Console\Command {
             return;
         }
 
-        $o->writeln('Hello World!');
+        $o->writeln('Hello %s!', $i->getOption('name'));
     }
 }
 
