@@ -41,12 +41,12 @@ class Application
      * 
      * @access  public
      * @return  void
-     * 
+     * @throws  \Console\Exception\Runtime  If applicationn wasn't run on CLI SAPI
      */
     function __construct() {
         if (php_sapi_name() !== 'cli') {
             // Check for SAPI in used
-            exit('Application must be run from CLI only.' . PHP_EOL);
+            throw new \Console\Exception\Runtime('Application must be run from CLI only.');
         }
 
         // Instantiate a new Console Input/Output
@@ -60,13 +60,14 @@ class Application
      * @param   string      $name       Command Name
      * @param   callable    $command    Callable command
      * @return  void
+     * @throws  \Console\Exception\Runtime  Duplicated command registered
      */
     public function add($name, callable $command) {
         // Make sure to unify command name
         $commandName = strtolower($name);
 
         if (isset($this->_command[$commandName])) {
-            // throw here
+            throw new \Console\Exception\Runtime('Duplicated command.');
         }
 
         // Add command
