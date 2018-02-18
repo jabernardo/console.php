@@ -61,7 +61,7 @@ class Input
                 // to set the value of a key 
                 $tokens = explode(':', $argv[$i]);
                 // Make sure to remove the option key
-                $param_name = $tokens[0];
+                $param_name = strtolower($tokens[0]);
                 array_shift($tokens);
                 // Then let the others to be the value
                 $param_value = implode(':', $tokens);
