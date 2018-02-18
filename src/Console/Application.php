@@ -37,6 +37,14 @@ class Application
     private $_output;
 
     /**
+     * Default command to run
+     * 
+     * @access  public
+     * @var     mixed
+     */
+    private $_default;
+
+    /**
      * Class construct function
      * 
      * @access  public
@@ -59,15 +67,24 @@ class Application
      *
      * @param   string      $name       Command Name
      * @param   callable    $command    Callable command
+     * @param   boolean     $default    Use as default command (false)
      * @return  void
      * @throws  \Console\Exception\Runtime  Duplicated command registered
      */
-    public function add($name, callable $command) {
+    public function add($name, callable $command, $default = false) {
         // Make sure to unify command name
         $commandName = strtolower($name);
 
         if (isset($this->_command[$commandName])) {
             throw new \Console\Exception\Runtime('Duplicated command.');
+        }
+
+        if (!is_null($this->_default) && $default) {
+            throw new \Console\Exception\Runtime('Default command was already declared.');
+        }
+
+        if ($default) {
+            $this->_default = $command;
         }
 
         // Add command
@@ -93,9 +110,13 @@ class Application
 
                 // Execute the command
                 return $cmd($this->_input, $this->_output);
+            } else {
+                exit('Command not found: "' . $commandName . '"' . PHP_EOL);
             }
+        }
 
-            // Execute default command here...
+        if (!is_null($this->_default) && is_callable($this->_default)) {
+            return call_user_func($this->_default, $this->_input, $this->_output);
         }
     }
 }
