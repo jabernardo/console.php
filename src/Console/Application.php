@@ -109,12 +109,14 @@ class Application
                 $cmd = $this->_commands[$commandName];
 
                 // Execute the command
-                return $cmd($this->_input, $this->_output);
+                return call_user_func($cmd, $this->_input, $this->_output);
             } else {
+                // Command not found
                 exit('Command not found: "' . $commandName . '"' . PHP_EOL);
             }
         }
 
+        // Call the default command if set
         if (!is_null($this->_default) && is_callable($this->_default)) {
             return call_user_func($this->_default, $this->_input, $this->_output);
         }
