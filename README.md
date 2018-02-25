@@ -43,28 +43,130 @@ $app->run();
 ### hasFlag `:boolean`
 Check if flag was passed on application.
 
+```php
+<?php
+
+class HelloCommand implements \Console\Command {
+    function __invoke(\Console\Input $i, \Console\Output $o) {
+        // Check if flag exists
+        if ($i->hasFlag('q')) {
+            // Do something
+        }
+    }
+}
+
+```
+
 ### hasOption `:boolean`
 Check if option was passed on application.
+
+```php
+<?php
+
+class HelloCommand implements \Console\Command {
+    function __invoke(\Console\Input $i, \Console\Output $o) {
+        // Check if option exists
+        if ($i->hasOption('max')) {
+            // Do something
+        }
+    }
+}
+
+```
 
 ### hasOptions `:boolean`
 Check if option(s) was passed on application.
 
+```php
+<?php
+
+class HelloCommand implements \Console\Command {
+    function __invoke(\Console\Input $i, \Console\Output $o) {
+        // Check if option exists
+        if ($i->hasOptions(['age', 'name'])) {
+            // Do something
+        }
+    }
+}
+
+```
+
 ### getOption `:mixed`
 Returns the value of option being passed on.
+
+```php
+<?php
+
+class HelloCommand implements \Console\Command {
+    private $max = 0;
+    
+    function __invoke(\Console\Input $i, \Console\Output $o) {
+        // Check if option exists
+        if ($i->hasOption('max')) {
+            $this->max = $i->getOption('max');
+        }
+    }
+}
+
+```
 
 ### getOptions `:array`
 Returns all options.
 
+```php
+<?php
+
+class HelloCommand implements \Console\Command {
+    function __invoke(\Console\Input $i, \Console\Output $o) {
+        $options = $i->getOptions();
+    }
+}
+
+```
+
 ### getParameters `:array`
 Returns all parameters.
+
+```php
+<?php
+
+class HelloCommand implements \Console\Command {
+    function __invoke(\Console\Input $i, \Console\Output $o) {
+        $params = $i->getParameters();
+    }
+}
+
+```
 
 ## Output
 
 ### write `:void`
 Write string buffer.
 
+```php
+<?php
+
+class HelloCommand implements \Console\Command {
+    function __invoke(\Console\Input $i, \Console\Output $o) {
+        $o->write('Hello %s!', $i->getOption('name'));
+    }
+}
+
+```
+
 ### writeln `:void`
 Write a line of string.
+
+```php
+<?php
+
+class HelloCommand implements \Console\Command {
+    function __invoke(\Console\Input $i, \Console\Output $o) {
+        $o->write('Hello %s! So you\'re %d years old.', $i->getOption('name'), $i->getOption('age'));
+    }
+}
+
+```
 
 ## License
 
