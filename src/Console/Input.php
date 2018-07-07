@@ -5,7 +5,6 @@ namespace Console;
 /**
  * Console Input Class
  * 
- * @version     1.0
  * @author      John Aldrich Bernardo <4ldrich@protonmail.com>
  * @package     console.php
  * 
@@ -37,14 +36,39 @@ class Input
     private $_parameters = [];
 
     /**
+     * Delimeter for options
+     * 
+     * @var     string
+     * @access  private
+     * 
+     */
+    private $_delimeter = ':';
+
+    /**
      * Class construct
      * 
      * @access  public
      * @return  void
      */
     function __construct() {
+        $this->parseArgs();
+    }
+
+    /**
+     * Parse Args
+     * 
+     * @access  private
+     * @return  void
+     * 
+     */
+    private function parseArgs() {
         // Use the global $argv variable to retrieve command-line arguments
         global $argv;
+
+        // Reset values
+        $this->_flags       = [];
+        $this->_options     = [];
+        $this->_parameters  = [];
 
         // index[0] is the script name and index[1] is the command name
         // so count starts from 2 from now on
@@ -56,15 +80,15 @@ class Input
                 $flag = strlen($flag) > 1 ? str_split($flag) : [$flag];
                 // Then register flags
                 $this->_flags = array_merge($this->_flags, $flag);
-            } else if (strpos($argv[$i], ':') > 0) {
+            } else if (strpos($argv[$i], $this->_delimeter) > 0) {
                 // In our history options are the parameters that lets the user
                 // to set the value of a key 
-                $tokens = explode(':', $argv[$i]);
+                $tokens = explode($this->_delimeter, $argv[$i]);
                 // Make sure to remove the option key
                 $param_name = strtolower($tokens[0]);
                 array_shift($tokens);
                 // Then let the others to be the value
-                $param_value = implode(':', $tokens);
+                $param_value = implode($this->_delimeter, $tokens);
                 // Register options
                 // NOTE: Options are allowed to be overwritten
                 $this->_options[$param_name] = $param_value;
@@ -157,5 +181,30 @@ class Input
      */
     public function getParameters() {
         return $this->_parameters;
+    }
+
+    /**
+     * Set option delimeter
+     * 
+     * @access  public
+     * @param   string  $delimeter  Option delimeter (:)
+     * @return  void
+     * 
+     */
+    public function setOptionDelimeter($delimeter = ':') {
+        $this->_delimeter = $delimeter;
+
+        $this->parseArgs();
+    }
+
+    /**
+     * Get option delimeter
+     * 
+     * @access  public
+     * @return  string
+     * 
+     */
+    public function getOptionDelimeter() {
+        return $this->_delimeter;
     }
 }
