@@ -124,6 +124,25 @@ class HelloCommand implements \Console\Command {
 
 ```
 
+### setOptionDelimeter `:void`
+Set option delimeter (default value is `:`)
+
+```php
+<?php
+
+class HelloCommand implements \Console\Command {
+    function __invoke(\Console\Input $i, \Console\Output $o) {
+        $i->setOptionDelimeter('=');
+        $options = $i->getOptions();
+    }
+}
+
+```
+
+### getOptionDelimeter `:string`
+Get option delimeter (default value is `:`)
+
+
 ### getParameters `:array`
 Returns all parameters.
 
