@@ -5,7 +5,6 @@ namespace Console;
 /**
  * Console Application Class
  * 
- * @version     1.0
  * @author      John Aldrich Bernardo <4ldrich@protonmail.com>
  * @package     console.php
  * 
@@ -89,6 +88,31 @@ class Application
 
         // Add command
         $this->_commands[$commandName] = $command;
+    }
+
+    /**
+     * Get command callback
+     * 
+     * @access  public
+     * @param   string  $command 
+     * @return  mixed
+     * 
+     */
+    public function get($command) {
+        return isset($this->_commands[$command]) ?
+            $this->_commands[$command] :
+            null;
+    }
+
+    /**
+     * Get registered commands
+     * 
+     * @access  public
+     * @return  array
+     * 
+     */
+    public function getCommands() {
+        return array_keys($this->_commands);
     }
     
     /**
