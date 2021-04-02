@@ -189,4 +189,4 @@ class HelloCommand implements \Console\Command {
 
 ## License
 
-The `calf` is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+The `console.php` is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
